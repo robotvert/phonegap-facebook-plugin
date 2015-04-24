@@ -9,7 +9,7 @@
  *
  */
 
-if (cordova.platformId == "browser") {
+if (!window.cordova || cordova.platformId == "browser") {
 
     var facebookConnectPlugin = {
 
@@ -51,7 +51,7 @@ if (cordova.platformId == "browser") {
             if (options.link && !options.href) {
                 options.href = options.link;
             }
-            
+
             // Try will catch errors when SDK has not been init
             try {
                 FB.ui(options,
@@ -82,7 +82,7 @@ if (cordova.platformId == "browser") {
                 }
                 options.scope = permissions.toString();
             }
-            
+
             FB.login(function (response) {
                 if (response.authResponse) {
                     s(response);
@@ -132,7 +132,7 @@ if (cordova.platformId == "browser") {
 
         api: function (graphPath, permissions, s, f) {
             // JS API does not take additional permissions
-            
+
             // Try will catch errors when SDK has not been init
             try {
                 FB.api(graphPath, function (response) {
@@ -164,7 +164,7 @@ if (cordova.platformId == "browser") {
             });
         }
     };
-    
+
     // Bake in the JS SDK
     (function () {
         // Retrieve the root element to append the script tags to
@@ -188,11 +188,11 @@ if (cordova.platformId == "browser") {
         }
     }());
 
-    module.exports = facebookConnectPlugin;
+    // module.exports = facebookConnectPlugin;
 
 } else {
 
-    var exec = require("cordova/exec");
+    var exec = cordova.exec;
 
     var facebookConnectPlugin = {
 
@@ -242,5 +242,5 @@ if (cordova.platformId == "browser") {
         }
     };
 
-    module.exports = facebookConnectPlugin;
+    // module.exports = facebookConnectPlugin;
 }
